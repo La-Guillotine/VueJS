@@ -6,7 +6,7 @@ const app = express();
 
 new Movie('Titanic', {nom:'Cameron',prenom:'James', nationalite:'Royaume-Uni'}, "1998", 'Le bateau coule OMG !!!','Historique',4,'https://img.over-blog-kiwi.com/1/04/49/45/20181026/ob_6c1a3f_titanic-via-encyclopedia-titanica-2.jpg');
 new Movie('Interstellar', {nom:'Dolan',prenom:'Christopher', nationalite:'Etats-Unis'}, "2014", 'Un fucking trou noir de ses morts','Science-Fiction',3,'https://www.telerama.fr/sites/tr_master/files/styles/sheet_illustration_625/public/assets/related_links/73554/74469955_525944.jpg?itok=Yl8qbnpm');
-new Movie('Assurancetourix', {nom:'B',prenom:'A', nationalite:'France'}, "2020", 'Il chante et ça fait mal','Humour',4.5);
+new Movie('Assurancetourix', {nom:'B',prenom:'A', nationalite:'France'}, "2020", 'Il chante et ça fait mal','Humour',3, "https://i.ytimg.com/vi/PDMPYJCTLAY/maxresdefault.jpg");
 
 app.use(bodyParser.json()) //parse JSON body
 app.use(bodyParser.urlencoded()) //parse x-www-form-urlencoded body
@@ -39,7 +39,8 @@ app.post('/api/movies/:id', (req, res) => {
         if(req.body.year) movie.annee = req.body.year;
         if(req.body.image) movie.image = req.body.image;
         if(req.body.synopsys) movie.synopsys = req.body.synopsys;
-
+        if(req.body.genre) movie.genre = req.body.genre;
+        if(req.body.note) movie.note = req.body.note;
         res.send(movie);
     }
     else{
@@ -47,7 +48,8 @@ app.post('/api/movies/:id', (req, res) => {
     }
 });
 app.post('/api/movies', (req, res) => {
-    new Movie(req.body.title, req.body.realisateur, req.body.year, req.body.synopsys, req.body.image); 
+    new Movie(req.body.title, req.body.realisateur, req.body.year, req.body.synopsys,
+        req.body.genre,req.body.note,req.body.image); 
     res.send(Movie.all());
 });
 app.delete('/api/movies/:id', (req, res) => {
